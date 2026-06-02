@@ -1,6 +1,6 @@
 package autotests.duckTest.getRequest;
 
-import autotests.baseDuckTest.baseDuckTest;
+import autotests.baseDuckTest.BaseDuckTest;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
@@ -11,10 +11,10 @@ import org.testng.annotations.Test;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class propertiesDuckTest extends baseDuckTest {
+public class PropertiesDuckTest extends BaseDuckTest {
 
-    private static final String ODD_ID = "1";   // нечётный id, material = rubber
-    private static final String EVEN_ID = "2";  // чётный id, material = wood
+    private static final String ODD_ID = "1";
+    private static final String EVEN_ID = "2";
 
     @Test(description = "Проверка вывода данных о уточке с четным id и значением поля material = wood)")
     @CitrusTest

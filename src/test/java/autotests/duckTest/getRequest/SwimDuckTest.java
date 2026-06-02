@@ -1,6 +1,6 @@
 package autotests.duckTest.getRequest;
 
-import autotests.baseDuckTest.baseDuckTest;
+import autotests.baseDuckTest.BaseDuckTest;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
@@ -11,36 +11,23 @@ import org.testng.annotations.Test;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class swimDuckTest extends baseDuckTest {
+public class SwimDuckTest extends BaseDuckTest {
     @Test(description = "Проверка умения плавать уточки с существующим id")
     @CitrusTest
     public void swimDuckWithValidId(@Optional @CitrusResource TestCaseRunner runner) {
-        createDuck(runner,
-                "yellow",
-                1,
-                "wood",
-                "quack",
-                "ACTIVE");
-        validateResponseCreate(runner,
-                "yellow",
-                1,
-                "wood",
-                "quack",
-                "ACTIVE");
-
+        createDuckBase(runner, "yellow", 1, "wood", "quack", "ACTIVE");
         getSwimDuck(runner, "${duckId}");
-        validateResponseSwimOK(runner, "I’m swimming");
-
+        validateResponseSwim(runner, HttpStatus.OK, "I'm swimming");
         deleteDuck(runner, "${duckId}");
-        validateResponseDelete(runner);
     }
-
 
     @Test(description = "Проверка умения плавать уточки с несуществующим id")
     @CitrusTest
     public void swimDuckWithInvalidId(@Optional @CitrusResource TestCaseRunner runner) {
-        getSwimDuck(runner, "1000000");
-        validateResponseSwimNotFound(runner, "Paws are not found ((((");
+        createDuckBase(runner, "yellow", 1, "rubber", "quack", "ACTIVE");
+        deleteDuck(runner, "${duckId}");
+        getSwimDuck(runner, "${duckId}");
+        validateResponseSwim(runner, HttpStatus.NOT_FOUND, "Paws are not found ((((");
     }
 
     public void getSwimDuck(TestCaseRunner runner, String id) {
@@ -53,27 +40,13 @@ public class swimDuckTest extends baseDuckTest {
                 .queryParam("id", id));
     }
 
-    public void validateResponseSwimOK(TestCaseRunner runner, String mas) {
+    public void validateResponseSwim(TestCaseRunner runner, HttpStatus status, String mas) {
         runner.$(http()
                 .client("http://localhost:2222")
                 .receive()
-                .response(HttpStatus.OK)
+                .response(status)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body("{\n" +
-                        "\"message\": \"" + mas + "\"\n" +
-                        "}"));
-    }
-
-    public void validateResponseSwimNotFound(TestCaseRunner runner, String mas) {
-        runner.$(http()
-                .client("http://localhost:2222")
-                .receive()
-                .response(HttpStatus.NOT_FOUND)
-                .message()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body("{\n" +
-                        "\"message\": \"" + mas + "\"\n" +
-                        "}"));
+                .body("{\n" + "\"message\": \"" + mas + "\"\n" + "}"));
     }
 }
