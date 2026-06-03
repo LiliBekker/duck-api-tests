@@ -1,13 +1,13 @@
-package autotests.duckTest.deleteRequest;
+package autotests.test.duckController;
 
-import autotests.baseDuckTest.BaseDuckTest;
+import autotests.clients.duckController.DeleteClient;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
-public class DeleteDuckTest extends BaseDuckTest {
+public class DeleteTest extends DeleteClient {
     @Test(description = "Удаление уточки")
     @CitrusTest
     public void deleteDuckWithMaterialWood(@Optional @CitrusResource TestCaseRunner runner) {
