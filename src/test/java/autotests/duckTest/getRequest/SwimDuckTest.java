@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class SwimDuckTest extends BaseDuckTest {
+    //Обнаружен баг - Отсутствие атрибута соответствующего характеристики плаванья уточки
     @Test(description = "Проверка умения плавать уточки с существующим id")
     @CitrusTest
     public void swimDuckWithValidId(@Optional @CitrusResource TestCaseRunner runner) {
@@ -21,13 +22,14 @@ public class SwimDuckTest extends BaseDuckTest {
         deleteDuck(runner, "${duckId}");
     }
 
+    //Обнаружен баг - Неверный json-ответ при проверке умения плавать несуществующей уточки
     @Test(description = "Проверка умения плавать уточки с несуществующим id")
     @CitrusTest
     public void swimDuckWithInvalidId(@Optional @CitrusResource TestCaseRunner runner) {
         createDuckBase(runner, "yellow", 1, "rubber", "quack", "ACTIVE");
         deleteDuck(runner, "${duckId}");
         getSwimDuck(runner, "${duckId}");
-        validateResponseSwim(runner, HttpStatus.NOT_FOUND, "Paws are not found ((((");
+        validateResponseSwim(runner, HttpStatus.NOT_FOUND, "Not Found");
     }
 
     public void getSwimDuck(TestCaseRunner runner, String id) {

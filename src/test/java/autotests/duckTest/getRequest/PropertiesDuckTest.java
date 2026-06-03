@@ -16,6 +16,7 @@ public class PropertiesDuckTest extends BaseDuckTest {
     private static final String ODD_ID = "1";
     private static final String EVEN_ID = "2";
 
+    //Обнаружен баг - Пустое тело ответа при значении поля material = «wood» и четном id
     @Test(description = "Проверка вывода данных о уточке с четным id и значением поля material = wood)")
     @CitrusTest
     public void propertiesDuckWithEvenId(@Optional @CitrusResource TestCaseRunner runner) {
@@ -23,7 +24,8 @@ public class PropertiesDuckTest extends BaseDuckTest {
         validateResponseProperties(runner, "yellow", 1.0, "wood", "quack", "ACTIVE");
     }
 
-    @Test(description = "Проверка вывода данных о уточке с четным id и значением поля material = rubber)")
+    //Обнаружен баг - Некорректное значение поля height при значении поля material = «rubber» и нечетном id
+    @Test(description = "Проверка вывода данных о уточке с нечетным id и значением поля material = rubber)")
     @CitrusTest
     public void propertiesDuckWithOddId(@Optional @CitrusResource TestCaseRunner runner) {
         getPropertiesDuck(runner, ODD_ID);
