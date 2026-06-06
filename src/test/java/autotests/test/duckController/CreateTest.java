@@ -1,6 +1,8 @@
 package autotests.test.duckController;
 
 import autotests.clients.duckController.CreateClient;
+import autotests.payloads.request.DuckPropertiesRequestCreate;
+import autotests.payloads.response.DuckPropertiesResponseCreate;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
@@ -12,16 +14,40 @@ public class CreateTest extends CreateClient {
     @Test(description = "Проверка создания уточки с material = rubber")
     @CitrusTest
     public void createDuckWithMaterialRubber(@Optional @CitrusResource TestCaseRunner runner) {
-        createDuck(runner, "yellow", 1, "rubber", "quack", "ACTIVE");
-        validateResponseCreate(runner, "yellow", 1, "rubber", "quack", "ACTIVE");
+        DuckPropertiesRequestCreate properties = new DuckPropertiesRequestCreate()
+                .color("yellow")
+                .height(0.03)
+                .material("rubber")
+                .sound("quack")
+                .wingsState("ACTIVE");
+
+        DuckPropertiesResponseCreate expectedResponse = new DuckPropertiesResponseCreate()
+                .color("yellow")
+                .height(0.03)
+                .id("@isNumber()@")
+                .material("rubber")
+                .sound("quack")
+                .wingsState("ACTIVE");
+
+        createDuck(runner, properties);
+        //validateResponseCreate(runner, "yellow", 0.03, "rubber", "quack", "ACTIVE");
+        //validateResponseCreate(runner, "createTest/CreateDuckPropertiesResponse.json");
+        validateResponseCreate(runner, expectedResponse);
         deleteDuck(runner, "${duckId}");
     }
 
     @Test(description = "Проверка создания уточки с material = wood")
     @CitrusTest
     public void createDuckWithMaterialWood(@Optional @CitrusResource TestCaseRunner runner) {
-        createDuck(runner, "yellow", 1, "wood", "quack", "ACTIVE");
-        validateResponseCreate(runner, "yellow", 1, "wood", "quack", "ACTIVE");
+        DuckPropertiesRequestCreate properties = new DuckPropertiesRequestCreate()
+                .color("yellow")
+                .height(0.03)
+                .material("wood")
+                .sound("quack")
+                .wingsState("ACTIVE");
+        createDuck(runner, properties);
+        runner.variable("duckMaterial", "wood");
+        validateResponseCreate(runner, "createTest/CreateDuckPropertiesResponse.json");
         deleteDuck(runner, "${duckId}");
     }
 }

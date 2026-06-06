@@ -1,0 +1,8 @@
+{
+  "color": "yellow",
+  "height": 0.03,
+  "id": "@isNumber()@",
+  "material": "@variable('duckMaterial')@",
+  "sound": "quack",
+  "wingsState": "ACTIVE"
+}

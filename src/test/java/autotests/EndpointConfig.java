@@ -5,10 +5,12 @@ import com.consol.citrus.http.client.HttpClientBuilder;
 import org.springframework.context.annotation.Bean;
 
 public class EndpointConfig {
+    private final String duckServiceUrl = "http://localhost:2222";
+
     @Bean("duckService")
     public HttpClient duckService(){
         return new HttpClientBuilder()
-                .requestUrl("http://localhost:2222")
+                .requestUrl(duckServiceUrl)
                 .build();
     };
 }
