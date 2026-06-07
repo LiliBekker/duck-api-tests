@@ -2,8 +2,6 @@ package autotests.test.duckController;
 
 import autotests.clients.duckController.UpdateClient;
 import autotests.payloads.request.DuckPropertiesRequestCreate;
-import autotests.payloads.response.DuckMessageResponse;
-import autotests.payloads.response.DuckPropertiesResponseCreate;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;

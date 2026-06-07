@@ -26,4 +26,3 @@ public class DuckPropertiesResponseProperties {
     @JsonProperty("wingsState")
     String wingsState;
 }
-//Properties

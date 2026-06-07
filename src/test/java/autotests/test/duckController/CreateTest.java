@@ -30,8 +30,6 @@ public class CreateTest extends CreateClient {
                 .wingsState("ACTIVE");
 
         createDuck(runner, properties);
-        //validateResponseCreate(runner, "yellow", 0.03, "rubber", "quack", "ACTIVE");
-        //validateResponseCreate(runner, "createTest/CreateDuckPropertiesResponse.json");
         validateResponseCreate(runner, expectedResponse);
         deleteDuck(runner, "${duckId}");
     }

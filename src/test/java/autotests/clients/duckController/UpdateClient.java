@@ -17,6 +17,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 @ContextConfiguration(classes = {EndpointConfig.class})
 public class UpdateClient extends DuckClient {
+    String duck_update_api_path ="/api/duck/update";
     @Autowired
     protected HttpClient duckService;
 
@@ -25,7 +26,7 @@ public class UpdateClient extends DuckClient {
         runner.$(http()
                 .client(duckService)
                 .send()
-                .put("/api/duck/update")
+                .put(duck_update_api_path)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .queryParam("color", color)
@@ -65,6 +66,4 @@ public class UpdateClient extends DuckClient {
                 .type(MessageType.JSON)
                 .body(new ClassPathResource(expectedPayloadPath)));
     }
-
-
 }

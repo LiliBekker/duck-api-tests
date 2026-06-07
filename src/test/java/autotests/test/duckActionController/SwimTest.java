@@ -2,7 +2,6 @@ package autotests.test.duckActionController;
 
 import autotests.clients.duckActionController.SwimClient;
 import autotests.payloads.request.DuckPropertiesRequestCreate;
-import autotests.payloads.response.DuckPropertiesResponseCreate;
 import autotests.payloads.response.DuckSwimResponse;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
@@ -30,8 +29,6 @@ public class SwimTest extends SwimClient {
                 .error("Not Found")
                 .message("No message available")
                 .path("/api/duck/swim");
-        //validateResponseSwim(runner, HttpStatus.OK, "I'm swimming");
-        //validateResponseSwim(runner, HttpStatus.NOT_FOUND, "No message available");
         validateResponseSwim(runner, HttpStatus.NOT_FOUND, expectedResponse);
         deleteDuck(runner, "${duckId}");
     }
@@ -53,8 +50,6 @@ public class SwimTest extends SwimClient {
         runner.variable("Error", "Not Found");
         runner.variable("Message", "No message available");
         runner.variable("Path", "/api/duck/swim");
-        //validateResponseSwim(runner, HttpStatus.NOT_FOUND, "Not Found");
-        //validateResponseSwim(runner, HttpStatus.NOT_FOUND, "No message available");
         validateResponseSwimJson(runner, HttpStatus.NOT_FOUND, "messageTest/MessageSwimDuckPropertiesResponse.json");
     }
 }

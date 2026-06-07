@@ -17,6 +17,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 @ContextConfiguration(classes = {EndpointConfig.class})
 public class QuackClient extends DuckClient {
+    String duck_quack_api_path = "/api/duck/action/quack";
     @Autowired
     protected HttpClient duckService;
 
@@ -24,7 +25,7 @@ public class QuackClient extends DuckClient {
         runner.$(http()
                 .client(duckService)
                 .send()
-                .get("/api/duck/action/quack")
+                .get(duck_quack_api_path)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .queryParam("id", id)

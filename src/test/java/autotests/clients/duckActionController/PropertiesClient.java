@@ -17,14 +17,16 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 @ContextConfiguration(classes = {EndpointConfig.class})
 public class PropertiesClient extends DuckClient {
+    String duck_properties_api_path = "/api/duck/action/properties";
     @Autowired
     protected HttpClient duckService;
 
     public void getPropertiesDuck(TestCaseRunner runner, String id) {
+
         runner.$(http()
                 .client(duckService)
                 .send()
-                .get("/api/duck/action/properties")
+                .get(duck_properties_api_path)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .queryParam("id", id));

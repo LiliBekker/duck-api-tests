@@ -30,6 +30,4 @@ public class DuckPropertiesResponseCreate {
 
     @JsonProperty("wingsState")
     String wingsState;
-
 }
-//create

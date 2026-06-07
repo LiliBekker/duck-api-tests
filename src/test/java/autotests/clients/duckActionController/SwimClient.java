@@ -18,6 +18,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 @ContextConfiguration(classes = {EndpointConfig.class})
 public class SwimClient extends DuckClient {
+    String duck_swim_api_path = "/api/duck/swim";
     @Autowired
     protected HttpClient duckService;
 
@@ -25,7 +26,7 @@ public class SwimClient extends DuckClient {
         runner.$(http()
                 .client(duckService)
                 .send()
-                .get("/api/duck/swim")
+                .get(duck_swim_api_path)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .queryParam("id", id));
@@ -67,6 +68,4 @@ public class SwimClient extends DuckClient {
                 .type(MessageType.JSON)
                 .body(new ClassPathResource(expectedPayloadPath)));
     }
-
-
 }

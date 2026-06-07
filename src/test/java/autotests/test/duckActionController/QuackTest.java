@@ -1,7 +1,6 @@
 package autotests.test.duckActionController;
 
 import autotests.clients.duckActionController.QuackClient;
-import autotests.payloads.response.DuckPropertiesResponseCreate;
 import autotests.payloads.response.DuckQuackResponse;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
