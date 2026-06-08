@@ -17,8 +17,8 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 @ContextConfiguration(classes = {EndpointConfig.class})
 public class DuckClient extends TestNGCitrusSpringSupport {
-    String duck_create_api_path = "/api/duck/create";
-    String duck_delete_api_path = "/api/duck/delete";
+    String duckCreateApiPath = "/api/duck/create";
+    String duckDeleteApiPath = "/api/duck/delete";
     @Autowired
     protected HttpClient duckService;
 
@@ -27,7 +27,7 @@ public class DuckClient extends TestNGCitrusSpringSupport {
         runner.$(http()
                 .client(duckService)
                 .send()
-                .post(duck_create_api_path)
+                .post(duckCreateApiPath)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body("{\n" +
@@ -50,7 +50,7 @@ public class DuckClient extends TestNGCitrusSpringSupport {
         runner.$(http()
                 .client(duckService)
                 .send()
-                .post(duck_create_api_path)
+                .post(duckCreateApiPath)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .type(MessageType.JSON)
@@ -68,7 +68,7 @@ public class DuckClient extends TestNGCitrusSpringSupport {
         runner.$(http()
                 .client(duckService)
                 .send()
-                .delete(duck_delete_api_path)
+                .delete(duckDeleteApiPath)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .queryParam("id", id));

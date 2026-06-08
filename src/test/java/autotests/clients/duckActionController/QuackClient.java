@@ -1,31 +1,24 @@
 package autotests.clients.duckActionController;
 
-import autotests.EndpointConfig;
 import autotests.clients.DuckClient;
 import com.consol.citrus.TestCaseRunner;
-import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.message.builder.ObjectMappingPayloadBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-@ContextConfiguration(classes = {EndpointConfig.class})
 public class QuackClient extends DuckClient {
-    String duck_quack_api_path = "/api/duck/action/quack";
-    @Autowired
-    protected HttpClient duckService;
+    String duckQuackApiPath = "/api/duck/action/quack";
 
     public void getQuackDuck(TestCaseRunner runner, String id, String repetitionCount, String soundCount) {
         runner.$(http()
                 .client(duckService)
                 .send()
-                .get(duck_quack_api_path)
+                .get(duckQuackApiPath)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .queryParam("id", id)
