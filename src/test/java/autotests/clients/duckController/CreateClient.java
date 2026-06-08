@@ -1,38 +1,18 @@
-package autotests.duckTest.postRequest;
+package autotests.clients.duckController;
 
-import autotests.baseDuckTest.BaseDuckTest;
+import autotests.clients.DuckClient;
 import com.consol.citrus.TestCaseRunner;
-import com.consol.citrus.annotations.CitrusResource;
-import com.consol.citrus.annotations.CitrusTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Test;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class CreateDuckTest extends BaseDuckTest {
-
-    @Test(description = "Проверка создания уточки с material = rubber")
-    @CitrusTest
-    public void createDuckWithMaterialRubber(@Optional @CitrusResource TestCaseRunner runner) {
-        createDuck(runner, "yellow", 1, "rubber", "quack", "ACTIVE");
-        validateResponseCreate(runner, "yellow", 1, "rubber", "quack", "ACTIVE");
-        deleteDuck(runner, "${duckId}");
-    }
-
-    @Test(description = "Проверка создания уточки с material = wood")
-    @CitrusTest
-    public void createDuckWithMaterialWood(@Optional @CitrusResource TestCaseRunner runner) {
-        createDuck(runner, "yellow", 1, "wood", "quack", "ACTIVE");
-        validateResponseCreate(runner, "yellow", 1, "wood", "quack", "ACTIVE");
-        deleteDuck(runner, "${duckId}");
-    }
+public class CreateClient extends DuckClient {
 
     public void createDuck(TestCaseRunner runner, String color, double height, String material,
                            String sound, String wingsState) {
         runner.$(http()
-                .client("http://localhost:2222")
+                .client(duckService)
                 .send()
                 .post("/api/duck/create")
                 .message()
@@ -48,7 +28,7 @@ public class CreateDuckTest extends BaseDuckTest {
     public void validateResponseCreate(TestCaseRunner runner, String color, double height,
                                        String material, String sound, String wingsState) {
         runner.$(http()
-                .client("http://localhost:2222")
+                .client(duckService)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
