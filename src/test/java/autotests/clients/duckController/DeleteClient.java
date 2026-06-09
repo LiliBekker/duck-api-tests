@@ -9,9 +9,16 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import static com.consol.citrus.actions.ExecuteSQLQueryAction.Builder.query;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class DeleteClient extends DuckClient {
+
+    protected void validateDeleteDuckInDatabase(TestCaseRunner runner, String id) {
+        runner.$(query(testDb)
+                .statement("select COUNT(*) as count from DUCK where ID=" + id)
+                .validate("count", "0"));
+    }
 
     public void validateResponseDelete(TestCaseRunner runner) {
         runner.$(http()

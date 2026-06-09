@@ -10,8 +10,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Random;
+
+import static com.consol.citrus.actions.ExecuteSQLAction.Builder.sql;
+import static com.consol.citrus.actions.ExecuteSQLQueryAction.Builder.query;
 import static com.consol.citrus.dsl.MessageSupport.MessageBodySupport.fromBody;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
@@ -21,6 +26,18 @@ public class DuckClient extends TestNGCitrusSpringSupport {
     String duckDeleteApiPath = "/api/duck/delete";
     @Autowired
     protected HttpClient duckService;
+
+    @Autowired
+    protected SingleConnectionDataSource testDb;
+
+    public void generateDuckId(TestCaseRunner runner) {
+        runner.variable("duckId", new Random().nextInt(1_000_000));
+    }
+
+    public void updateDataBase(TestCaseRunner runner, String query) {
+        runner.$(sql(testDb)
+                .statement(query));
+    }
 
     public void createDuckBase(TestCaseRunner runner, String color, double height, String material,
                                String sound, String wingsState) {
@@ -64,6 +81,14 @@ public class DuckClient extends TestNGCitrusSpringSupport {
                 .extract(fromBody().expression("$.id", "duckId")));
     }
 
+    public void createDuckInDatabase(TestCaseRunner runner, String id, String color, String height, String material,
+                                     String sound, String wingsState) {
+
+        String query = "insert into DUCK (id, color, height, material, sound, wings_state)\n" +
+                "values (" + id + ", '" + color + "', " + height + ", '" + material + "', '" + sound + "', '" + wingsState + "');";
+        updateDataBase(runner, query);
+    }
+
     public void deleteDuck(TestCaseRunner runner, String id) {
         runner.$(http()
                 .client(duckService)
@@ -72,5 +97,22 @@ public class DuckClient extends TestNGCitrusSpringSupport {
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .queryParam("id", id));
+    }
+
+    public void deleteDuckFromDatabase(TestCaseRunner runner, String id) {
+        String query = "delete from DUCK\n" +
+                "where id = " + id + ";";
+        updateDataBase(runner, query);
+    }
+
+    protected void validateDuckInDatabase(TestCaseRunner runner, String id, String color, String height,
+                                          String material, String sound, String wingsState) {
+        runner.$(query(testDb)
+                .statement("SELECT * FROM DUCK WHERE ID=" + id)
+                .validate("COLOR", color)
+                .validate("HEIGHT", height)
+                .validate("MATERIAL", material)
+                .validate("SOUND", sound)
+                .validate("WINGS_STATE", wingsState));
     }
 }

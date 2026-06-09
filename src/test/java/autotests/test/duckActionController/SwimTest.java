@@ -1,7 +1,6 @@
 package autotests.test.duckActionController;
 
 import autotests.clients.duckActionController.SwimClient;
-import autotests.payloads.request.DuckPropertiesRequestCreate;
 import autotests.payloads.response.DuckSwimResponse;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
@@ -15,13 +14,8 @@ public class SwimTest extends SwimClient {
     @Test(description = "Проверка умения плавать уточки с существующим id")
     @CitrusTest
     public void swimDuckWithValidId(@Optional @CitrusResource TestCaseRunner runner) {
-        DuckPropertiesRequestCreate properties = new DuckPropertiesRequestCreate()
-                .color("yellow")
-                .height(0.03)
-                .material("rubber")
-                .sound("quack")
-                .wingsState("ACTIVE");
-        createDuck(runner, properties);
+        runner.variable("duckId", "1");
+        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
         getSwimDuck(runner, "${duckId}");
         DuckSwimResponse expectedResponse = new DuckSwimResponse()
                 .timestamp("@ignore@")
@@ -30,21 +24,17 @@ public class SwimTest extends SwimClient {
                 .message("No message available")
                 .path("/api/duck/swim");
         validateResponseSwim(runner, HttpStatus.NOT_FOUND, expectedResponse);
-        deleteDuck(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${duckId}");
+
     }
 
     //Обнаружен баг - Неверный json-ответ при проверке умения плавать несуществующей уточки. Тест временно сделан зеленным
     @Test(description = "Проверка умения плавать уточки с несуществующим id")
     @CitrusTest
     public void swimDuckWithInvalidId(@Optional @CitrusResource TestCaseRunner runner) {
-        DuckPropertiesRequestCreate properties = new DuckPropertiesRequestCreate()
-                .color("yellow")
-                .height(0.03)
-                .material("rubber")
-                .sound("quack")
-                .wingsState("ACTIVE");
-        createDuck(runner, properties);
-        deleteDuck(runner, "${duckId}");
+        runner.variable("duckId", "2");
+        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
+        deleteDuckFromDatabase(runner, "${duckId}");
         getSwimDuck(runner, "${duckId}");
         runner.variable("Status", 404);
         runner.variable("Error", "Not Found");

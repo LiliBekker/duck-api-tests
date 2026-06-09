@@ -1,7 +1,6 @@
 package autotests.test.duckActionController;
 
 import autotests.clients.duckActionController.FlyClient;
-import autotests.payloads.request.DuckPropertiesRequestCreate;
 import autotests.payloads.response.DuckMessageResponse;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
@@ -14,52 +13,33 @@ public class FlyTest extends FlyClient {
     @Test(description = "Проверка умения летать уточки с существующим id и с активными крыльями")
     @CitrusTest
     public void flyDuckWithActiveWings(@Optional @CitrusResource TestCaseRunner runner) {
-        DuckPropertiesRequestCreate properties = new DuckPropertiesRequestCreate()
-                .color("yellow")
-                .height(0.03)
-                .material("rubber")
-                .sound("quack")
-                .wingsState("ACTIVE");
-        createDuck(runner, properties);
-
+        runner.variable("duckId", "1");
+        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
         getFlyDuck(runner, "${duckId}");
-
         DuckMessageResponse expectedResponse = new DuckMessageResponse()
                 .message("I am flying :)");
-
         validateResponseFly(runner, expectedResponse);
-        deleteDuck(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${duckId}");
     }
 
     @Test(description = "Проверка умения летать уточки с существующим id и со связанными крыльями")
     @CitrusTest
     public void flyDuckWithFixedWings(@Optional @CitrusResource TestCaseRunner runner) {
-        DuckPropertiesRequestCreate properties = new DuckPropertiesRequestCreate()
-                .color("yellow")
-                .height(0.03)
-                .material("rubber")
-                .sound("quack")
-                .wingsState("FIXED");
-        createDuck(runner, properties);
+        runner.variable("duckId", "2");
+        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "FIXED");
         getFlyDuck(runner, "${duckId}");
         runner.variable("message", "I can not fly :C");
         validateResponseFlyJson(runner, "messageTest/MessageDuckPropertiesResponse.json");
-        deleteDuck(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${duckId}");
     }
 
     @Test(description = "Проверка умения летать уточки с существующим id и с крыльями в неопределенном состоянии")
     @CitrusTest
     public void flyDuckWithUndefinedWings(@Optional @CitrusResource TestCaseRunner runner) {
-        DuckPropertiesRequestCreate properties = new DuckPropertiesRequestCreate()
-                .color("yellow")
-                .height(0.03)
-                .material("rubber")
-                .sound("quack")
-                .wingsState("UNDEFINED");
-        createDuck(runner, properties);
-
+        runner.variable("duckId", "3");
+        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "UNDEFINED");
         getFlyDuck(runner, "${duckId}");
         validateResponseFly(runner, "Wings are not detected :(");
-        deleteDuck(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${duckId}");
     }
 }

@@ -11,28 +11,35 @@ import org.testng.annotations.Test;
 public class PropertiesTest extends PropertiesClient {
 
     private static final String ODD_ID = "1";
-    private static final String EVEN_ID = "24";
+    private static final String EVEN_ID = "2";
 
     //Обнаружен баг - Пустое тело ответа при значении поля material = «wood» и четном id. Временно тест изменен на зеленый
     @Test(description = "Проверка вывода данных о уточке с четным id и значением поля material = wood)")
     @CitrusTest
     public void propertiesDuckWithEvenId(@Optional @CitrusResource TestCaseRunner runner) {
-        getPropertiesDuck(runner, EVEN_ID);
+        generateDuckId(runner);
+
+       // runner.variable("duckId", EVEN_ID);
+        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
+        getPropertiesDuck(runner, "${duckId}");
         validateResponseProperties(runner, "messageTest/MessagePropertiesDuckResponse.json");
+        deleteDuckFromDatabase(runner, "${duckId}");
     }
 
     //Обнаружен баг - Некорректное значение поля height при значении поля material = «rubber» и нечетном id. Временно тест изменен на зеленый
     @Test(description = "Проверка вывода данных о уточке с нечетным id и значением поля material = rubber)")
     @CitrusTest
     public void propertiesDuckWithOddId(@Optional @CitrusResource TestCaseRunner runner) {
-        getPropertiesDuck(runner, ODD_ID);
+        runner.variable("duckId", ODD_ID);
+        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
+        getPropertiesDuck(runner, "${duckId}");
         DuckPropertiesResponseProperties expectedResponse = new DuckPropertiesResponseProperties()
                 .color("yellow")
                 .height(3.0)
                 .material("rubber")
                 .sound("quack")
                 .wingsState("ACTIVE");
-
         validateResponseProperties(runner, expectedResponse);
+        deleteDuckFromDatabase(runner, "${duckId}");
     }
 }
