@@ -5,13 +5,20 @@ import autotests.payloads.response.DuckSwimResponse;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
 public class SwimTest extends SwimClient {
     //Обнаружен баг - Отсутствие атрибута соответствующего характеристики плаванья уточки. Тест временно сделан зеленным
-    @Test(description = "Проверка умения плавать уточки с существующим id")
+
+    @Epic("Тесты на duck-action-controller")
+    @Feature("Проверка умения плавать уточки с существующим id")
+    @Story("Эндпоинт /api/duck/swim")
+    @Test()
     @CitrusTest
     public void swimDuckWithValidId(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", "1");
@@ -29,7 +36,11 @@ public class SwimTest extends SwimClient {
     }
 
     //Обнаружен баг - Неверный json-ответ при проверке умения плавать несуществующей уточки. Тест временно сделан зеленным
-    @Test(description = "Проверка умения плавать уточки с несуществующим id")
+
+    @Epic("Тесты на duck-action-controller")
+    @Feature("Проверка умения плавать уточки с несуществующим id")
+    @Story("Эндпоинт /api/duck/swim")
+    @Test()
     @CitrusTest
     public void swimDuckWithInvalidId(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", "2");

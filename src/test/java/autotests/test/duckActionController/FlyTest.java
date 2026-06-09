@@ -5,12 +5,19 @@ import autotests.payloads.response.DuckMessageResponse;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
 public class FlyTest extends FlyClient {
 
-    @Test(description = "Проверка умения летать уточки с существующим id и с активными крыльями")
+
+    @Epic("Тесты на duck-action-controller")
+    @Feature("Проверка умения летать уточки с существующим id и с активными крыльями")
+    @Story("Эндпоинт /api/duck/action/fly")
+    @Test()
     @CitrusTest
     public void flyDuckWithActiveWings(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", "1");
@@ -22,7 +29,11 @@ public class FlyTest extends FlyClient {
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
-    @Test(description = "Проверка умения летать уточки с существующим id и со связанными крыльями")
+
+    @Epic("Тесты на duck-action-controller")
+    @Feature("Проверка умения летать уточки с существующим id и со связанными крыльями")
+    @Story("Эндпоинт /api/duck/action/fly")
+    @Test()
     @CitrusTest
     public void flyDuckWithFixedWings(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", "2");
@@ -33,7 +44,12 @@ public class FlyTest extends FlyClient {
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
-    @Test(description = "Проверка умения летать уточки с существующим id и с крыльями в неопределенном состоянии")
+
+
+    @Epic("Тесты на duck-action-controller")
+    @Feature("Проверка умения летать уточки с существующим id и с крыльями в неопределенном состоянии")
+    @Story("Эндпоинт /api/duck/action/fly")
+    @Test()
     @CitrusTest
     public void flyDuckWithUndefinedWings(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", "3");
