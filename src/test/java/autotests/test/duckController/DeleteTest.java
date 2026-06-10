@@ -20,7 +20,9 @@ public class DeleteTest extends DeleteClient {
     public void deleteDuckInDatabase(@Optional @CitrusResource TestCaseRunner runner) {
         generateDuckId(runner);
         createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
-        deleteDuckFromDatabase(runner, "${duckId}");
+        runner.variable("message", "Duck is deleted");
+        deleteDuck(runner, "${duckId}");
+        validateResponseDelete(runner, "messageTest/MessageDuckPropertiesResponse.json");
         validateDeleteDuckInDatabase(runner, "${duckId}");
     }
 }
