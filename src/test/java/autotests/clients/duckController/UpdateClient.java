@@ -12,18 +12,14 @@ public class UpdateClient extends DuckClient {
 
     public void updateDuck(TestCaseRunner runner, String color, double height, String id, String material,
                            String sound, String wingsState) {
-        runner.$(http()
-                .client(duckService)
-                .send()
-                .put(duckUpdateApiPath)
-                .message()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .queryParam("color", color)
-                .queryParam("height", String.valueOf(height))
-                .queryParam("id", id)
-                .queryParam("material", material)
-                .queryParam("sound", sound)
-                .queryParam("wingsState", wingsState));
+        String path = duckUpdateApiPath
+                + "?color=" + color
+                + "&height=" + height
+                + "&id=" + id
+                + "&material=" + material
+                + "&sound=" + sound
+                + "&wingsState=" + wingsState;
+        requestApiWithParamsPut(runner, path, duckService);
     }
 
     public void validateResponseUpdate(TestCaseRunner runner, HttpStatus status, String id) {

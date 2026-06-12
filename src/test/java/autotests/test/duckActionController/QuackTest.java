@@ -24,13 +24,13 @@ public class QuackTest extends QuackClient {
     @Test()
     @CitrusTest
     public void quackDuckWithOddId(@Optional @CitrusResource TestCaseRunner runner) {
-        runner.variable("duckId", ODD_ID);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
-        getQuackDuck(runner, "${duckId}", "1", "1");
+        runner.variable("id", ODD_ID);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "wood", "quack", "ACTIVE");
+        getQuackDuck(runner, "${id}", "1", "1");
         DuckQuackResponse expectedResponse = new DuckQuackResponse()
                 .sound("quack");
         validateResponseObject(runner, HttpStatus.OK,  expectedResponse);
-        deleteDuckFromDatabase(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${id}");
     }
 
 
@@ -40,11 +40,11 @@ public class QuackTest extends QuackClient {
     @Test()
     @CitrusTest
     public void quackDuckWithEvenId(@Optional @CitrusResource TestCaseRunner runner) {
-        runner.variable("duckId", EVEN_ID);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
-        getQuackDuck(runner, "${duckId}", "1", "1");
+        runner.variable("id", EVEN_ID);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "wood", "quack", "ACTIVE");
+        getQuackDuck(runner, "${id}", "1", "1");
         runner.variable("sound", "moo");
         validateResponseJsonBodyFromFile(runner, HttpStatus.OK, "messageTest/MessageQuackDuckPropertiesResponse.json");
-        deleteDuckFromDatabase(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${id}");
     }
 }

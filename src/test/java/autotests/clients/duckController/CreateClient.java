@@ -8,7 +8,7 @@ public class CreateClient extends DuckClient {
     String duckCreateApiPath = "/api/duck/create";
 
     public void createDuck(TestCaseRunner runner, Object duckData) {
-        requestApiObject(runner, duckCreateApiPath, duckData);
+        requestApiObject(runner, duckCreateApiPath, duckData, duckService);
     }
 
     public void validateResponseCreate(TestCaseRunner runner, HttpStatus status, String color, double height,

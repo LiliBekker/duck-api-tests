@@ -14,7 +14,8 @@ public class SwimClient extends DuckClient {
     String duckSwimApiPath = "/api/duck/swim";
 
     public void getSwimDuck(TestCaseRunner runner, String id) {
-        requestApiGet(runner, duckSwimApiPath, id);
+        String path = duckSwimApiPath + "?id=" + id;
+        requestApiWithParamsGet(runner, path, duckService);
     }
 
     public void validateResponseSwim(TestCaseRunner runner, HttpStatus status, String statusNum, String err, String mas) {
@@ -26,25 +27,5 @@ public class SwimClient extends DuckClient {
                 "  \"path\": \"/api/duck/swim\"\n" +
                 "}";
         validateResponseStringJsonBody(runner, status, body);
-    }
-
-    public void validateResponseSwim(TestCaseRunner runner, HttpStatus status, Object expectedPayload) {
-        runner.$(http()
-                .client(duckService)
-                .receive()
-                .response(status)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ObjectMappingPayloadBuilder(expectedPayload, new ObjectMapper())));
-    }
-
-    public void validateResponseSwimJson(TestCaseRunner runner, HttpStatus status, String expectedPayloadPath) {
-        runner.$(http()
-                .client(duckService)
-                .receive()
-                .response(status)
-                .message()
-                .type(MessageType.JSON)
-                .body(new ClassPathResource(expectedPayloadPath)));
     }
 }

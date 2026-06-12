@@ -20,9 +20,9 @@ public class SwimTest extends SwimClient {
     @Test()
     @CitrusTest
     public void swimDuckWithValidId(@Optional @CitrusResource TestCaseRunner runner) {
-        generateDuckId(runner);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
-        getSwimDuck(runner, "${duckId}");
+        generateId(runner);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
+        getSwimDuck(runner, "${id}");
         DuckSwimResponse expectedResponse = new DuckSwimResponse()
                 .timestamp("@ignore@")
                 .status(404)
@@ -30,7 +30,7 @@ public class SwimTest extends SwimClient {
                 .message("No message available")
                 .path("/api/duck/swim");
         validateResponseObject(runner, HttpStatus.NOT_FOUND, expectedResponse);
-        deleteDuckFromDatabase(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${id}");
 
     }
 
@@ -41,10 +41,10 @@ public class SwimTest extends SwimClient {
     @Test()
     @CitrusTest
     public void swimDuckWithInvalidId(@Optional @CitrusResource TestCaseRunner runner) {
-        generateDuckId(runner);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
-        deleteDuckFromDatabase(runner, "${duckId}");
-        getSwimDuck(runner, "${duckId}");
+        generateId(runner);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
+        deleteDuckFromDatabase(runner, "${id}");
+        getSwimDuck(runner, "${id}");
         runner.variable("Status", 404);
         runner.variable("Error", "Not Found");
         runner.variable("Message", "No message available");

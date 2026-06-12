@@ -8,7 +8,8 @@ public class FlyClient extends DuckClient {
     String duckFlyApiPath = "/api/duck/action/fly";
 
     public void getFlyDuck(TestCaseRunner runner, String id) {
-        requestApiGet(runner, duckFlyApiPath, id);
+        String path = duckFlyApiPath + "?id=" + id;
+        requestApiWithParamsGet(runner, path, duckService);
     }
 
     public void validateResponseFly(TestCaseRunner runner, HttpStatus status,  String message) {

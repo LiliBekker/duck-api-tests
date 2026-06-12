@@ -8,7 +8,8 @@ public class PropertiesClient extends DuckClient {
     String duckPropertiesApiPath = "/api/duck/action/properties";
 
     public void getPropertiesDuck(TestCaseRunner runner, String id) {
-        requestApiGet(runner, duckPropertiesApiPath, id);
+        String path = duckPropertiesApiPath + "?id=" + id;
+        requestApiWithParamsGet(runner, path, duckService);
     }
 
     public void validateResponseProperties(TestCaseRunner runner, HttpStatus status, String color, double height,

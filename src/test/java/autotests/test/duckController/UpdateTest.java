@@ -20,13 +20,13 @@ public class UpdateTest extends UpdateClient {
     @Test()
     @CitrusTest
     public void updateColorAndHeightDuck(@Optional @CitrusResource TestCaseRunner runner) {
-        generateDuckId(runner);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
-        updateDuck(runner, "red", 0.5, "${duckId}", "wood", "quack", "ACTIVE");
-        runner.variable("message", "Duck with id = ${duckId} is updated");
+        generateId(runner);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "wood", "quack", "ACTIVE");
+        updateDuck(runner, "red", 0.5, "${id}", "wood", "quack", "ACTIVE");
+        runner.variable("message", "Duck with id = ${id} is updated");
         validateResponseJsonBodyFromFile(runner, HttpStatus.OK, "messageTest/MessageDuckPropertiesResponse.json");
-        validateDuckInDatabase(runner, "${duckId}", "red", "0.5", "wood", "quack", "ACTIVE");
-        deleteDuckFromDatabase(runner, "${duckId}");
+        validateDuckInDatabase(runner, "${id}", "red", "0.5", "wood", "quack", "ACTIVE");
+        deleteDuckFromDatabase(runner, "${id}");
     }
 
 
@@ -36,12 +36,12 @@ public class UpdateTest extends UpdateClient {
     @Test()
     @CitrusTest
     public void updateColorAndSoundDuck(@Optional @CitrusResource TestCaseRunner runner) {
-        generateDuckId(runner);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
-        updateDuck(runner, "red", 0.03, "${duckId}", "wood", "quack-quack", "ACTIVE");
-        runner.variable("message", "Duck with id = ${duckId} is updated");
+        generateId(runner);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "wood", "quack", "ACTIVE");
+        updateDuck(runner, "red", 0.03, "${id}", "wood", "quack-quack", "ACTIVE");
+        runner.variable("message", "Duck with id = ${id} is updated");
         validateResponseJsonBodyFromFile(runner, HttpStatus.OK, "messageTest/MessageDuckPropertiesResponse.json");
-        validateDuckInDatabase(runner, "${duckId}", "red", "0.03", "wood", "quack-quack", "ACTIVE");
-        deleteDuckFromDatabase(runner, "${duckId}");
+        validateDuckInDatabase(runner, "${id}", "red", "0.03", "wood", "quack-quack", "ACTIVE");
+        deleteDuckFromDatabase(runner, "${id}");
     }
 }

@@ -9,7 +9,9 @@ public class DeleteClient extends DuckClient {
     String duckDeleteApiPath = "/api/duck/delete";
 
     public void deleteDuck(TestCaseRunner runner, String id) {
-        requestApiDelete(runner, duckDeleteApiPath, id);
+        String path = duckDeleteApiPath + "?id=" + id;
+        requestApiWithParamsDelete(runner, path, duckService);
+
     }
 
     protected void validateDeleteDuckInDatabase(TestCaseRunner runner, String id) {

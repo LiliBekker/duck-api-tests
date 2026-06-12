@@ -11,15 +11,8 @@ public class QuackClient extends DuckClient {
     String duckQuackApiPath = "/api/duck/action/quack";
 
     public void getQuackDuck(TestCaseRunner runner, String id, String repetitionCount, String soundCount) {
-        runner.$(http()
-                .client(duckService)
-                .send()
-                .get(duckQuackApiPath)
-                .message()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .queryParam("id", id)
-                .queryParam("repetitionCount", repetitionCount)
-                .queryParam("soundCount", soundCount));
+        String path = duckQuackApiPath + "?id=" + id + "&repetitionCount=" + repetitionCount + "&soundCount=" + soundCount;
+        requestApiWithParamsGet(runner, path, duckService);
     }
 
     public void validateResponseQuack(TestCaseRunner runner, HttpStatus status, String value) {

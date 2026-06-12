@@ -21,13 +21,13 @@ public class FlyTest extends FlyClient {
     @Test()
     @CitrusTest
     public void flyDuckWithActiveWings(@Optional @CitrusResource TestCaseRunner runner) {
-        generateDuckId(runner);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
-        getFlyDuck(runner, "${duckId}");
+        generateId(runner);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
+        getFlyDuck(runner, "${id}");
         DuckMessageResponse expectedResponse = new DuckMessageResponse()
                 .message("I am flying :)");
         validateResponseObject(runner, HttpStatus.OK, expectedResponse);
-        deleteDuckFromDatabase(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${id}");
     }
 
 
@@ -37,12 +37,12 @@ public class FlyTest extends FlyClient {
     @Test()
     @CitrusTest
     public void flyDuckWithFixedWings(@Optional @CitrusResource TestCaseRunner runner) {
-        generateDuckId(runner);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "FIXED");
-        getFlyDuck(runner, "${duckId}");
+        generateId(runner);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "rubber", "quack", "FIXED");
+        getFlyDuck(runner, "${id}");
         runner.variable("message", "I can not fly :C");
         validateResponseJsonBodyFromFile(runner, HttpStatus.OK, "messageTest/MessageDuckPropertiesResponse.json");
-        deleteDuckFromDatabase(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${id}");
     }
 
     @Epic("Тесты на duck-action-controller")
@@ -51,10 +51,10 @@ public class FlyTest extends FlyClient {
     @Test()
     @CitrusTest
     public void flyDuckWithUndefinedWings(@Optional @CitrusResource TestCaseRunner runner) {
-        generateDuckId(runner);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "UNDEFINED");
-        getFlyDuck(runner, "${duckId}");
+        generateId(runner);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "rubber", "quack", "UNDEFINED");
+        getFlyDuck(runner, "${id}");
         validateResponseFly(runner, HttpStatus.OK, "Wings are not detected :(");
-        deleteDuckFromDatabase(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${id}");
     }
 }

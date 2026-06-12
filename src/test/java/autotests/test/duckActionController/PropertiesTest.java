@@ -24,11 +24,11 @@ public class PropertiesTest extends PropertiesClient {
     @Test()
     @CitrusTest
     public void propertiesDuckWithEvenId(@Optional @CitrusResource TestCaseRunner runner) {
-        runner.variable("duckId", EVEN_ID);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
-        getPropertiesDuck(runner, "${duckId}");
+        runner.variable("id", EVEN_ID);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "wood", "quack", "ACTIVE");
+        getPropertiesDuck(runner, "${id}");
         validateResponseJsonBodyFromFile(runner, HttpStatus.OK, "messageTest/MessagePropertiesDuckResponse.json");
-        deleteDuckFromDatabase(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${id}");
     }
 
     //Обнаружен баг - Некорректное значение поля height при значении поля material = «rubber» и нечетном id. Временно тест изменен на зеленый
@@ -38,9 +38,9 @@ public class PropertiesTest extends PropertiesClient {
     @Test()
     @CitrusTest
     public void propertiesDuckWithOddId(@Optional @CitrusResource TestCaseRunner runner) {
-        runner.variable("duckId", ODD_ID);
-        createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
-        getPropertiesDuck(runner, "${duckId}");
+        runner.variable("id", ODD_ID);
+        createDuckInDatabase(runner, "${id}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
+        getPropertiesDuck(runner, "${id}");
         DuckPropertiesResponseProperties expectedResponse = new DuckPropertiesResponseProperties()
                 .color("yellow")
                 .height(3.0)
@@ -48,6 +48,6 @@ public class PropertiesTest extends PropertiesClient {
                 .sound("quack")
                 .wingsState("ACTIVE");
         validateResponseObject(runner, HttpStatus.OK, expectedResponse);
-        deleteDuckFromDatabase(runner, "${duckId}");
+        deleteDuckFromDatabase(runner, "${id}");
     }
 }
