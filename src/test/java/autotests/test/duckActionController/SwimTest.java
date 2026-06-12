@@ -14,14 +14,13 @@ import org.testng.annotations.Test;
 
 public class SwimTest extends SwimClient {
     //Обнаружен баг - Отсутствие атрибута соответствующего характеристики плаванья уточки. Тест временно сделан зеленным
-
     @Epic("Тесты на duck-action-controller")
     @Feature("Проверка умения плавать уточки с существующим id")
     @Story("Эндпоинт /api/duck/swim")
     @Test()
     @CitrusTest
     public void swimDuckWithValidId(@Optional @CitrusResource TestCaseRunner runner) {
-        runner.variable("duckId", "1");
+        generateDuckId(runner);
         createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
         getSwimDuck(runner, "${duckId}");
         DuckSwimResponse expectedResponse = new DuckSwimResponse()
@@ -30,20 +29,19 @@ public class SwimTest extends SwimClient {
                 .error("Not Found")
                 .message("No message available")
                 .path("/api/duck/swim");
-        validateResponseSwim(runner, HttpStatus.NOT_FOUND, expectedResponse);
+        validateResponseObject(runner, HttpStatus.NOT_FOUND, expectedResponse);
         deleteDuckFromDatabase(runner, "${duckId}");
 
     }
 
     //Обнаружен баг - Неверный json-ответ при проверке умения плавать несуществующей уточки. Тест временно сделан зеленным
-
     @Epic("Тесты на duck-action-controller")
     @Feature("Проверка умения плавать уточки с несуществующим id")
     @Story("Эндпоинт /api/duck/swim")
     @Test()
     @CitrusTest
     public void swimDuckWithInvalidId(@Optional @CitrusResource TestCaseRunner runner) {
-        runner.variable("duckId", "2");
+        generateDuckId(runner);
         createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
         deleteDuckFromDatabase(runner, "${duckId}");
         getSwimDuck(runner, "${duckId}");
@@ -51,6 +49,6 @@ public class SwimTest extends SwimClient {
         runner.variable("Error", "Not Found");
         runner.variable("Message", "No message available");
         runner.variable("Path", "/api/duck/swim");
-        validateResponseSwimJson(runner, HttpStatus.NOT_FOUND, "messageTest/MessageSwimDuckPropertiesResponse.json");
+        validateResponseJsonBodyFromFile(runner, HttpStatus.NOT_FOUND, "messageTest/MessageSwimDuckPropertiesResponse.json");
     }
 }

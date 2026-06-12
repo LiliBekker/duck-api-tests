@@ -7,6 +7,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
@@ -22,7 +23,7 @@ public class DeleteTest extends DeleteClient {
         createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
         runner.variable("message", "Duck is deleted");
         deleteDuck(runner, "${duckId}");
-        validateResponseJsonBodyFromFile(runner, "messageTest/MessageDuckPropertiesResponse.json");
+        validateResponseJsonBodyFromFile(runner, HttpStatus.OK, "messageTest/MessageDuckPropertiesResponse.json");
         validateDeleteDuckInDatabase(runner, "${duckId}");
     }
 }

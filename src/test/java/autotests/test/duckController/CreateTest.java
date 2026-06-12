@@ -9,6 +9,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
@@ -33,7 +34,7 @@ public class CreateTest extends CreateClient {
                 .sound("quack")
                 .wingsState("ACTIVE");
         createDuck(runner, properties);
-        validateResponseWthiIdObject(runner, expectedResponse);
+        validateResponseWithIdObject(runner, HttpStatus.OK, expectedResponse);
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
@@ -51,7 +52,7 @@ public class CreateTest extends CreateClient {
                 .wingsState("ACTIVE");
         createDuck(runner, properties);
         runner.variable("duckMaterial", "wood");
-        validateResponseWthiIdJsonBodyFromFile(runner, "createTest/CreateDuckPropertiesResponse.json");
+        validateResponseWithIdJsonBodyFromFile(runner, HttpStatus.OK, "createTest/CreateDuckPropertiesResponse.json");
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 }

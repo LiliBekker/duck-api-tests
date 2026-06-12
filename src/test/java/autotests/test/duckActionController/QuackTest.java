@@ -8,6 +8,7 @@ import com.consol.citrus.annotations.CitrusTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
@@ -28,7 +29,7 @@ public class QuackTest extends QuackClient {
         getQuackDuck(runner, "${duckId}", "1", "1");
         DuckQuackResponse expectedResponse = new DuckQuackResponse()
                 .sound("quack");
-        validateResponseQuack(runner, expectedResponse);
+        validateResponseObject(runner, HttpStatus.OK,  expectedResponse);
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
@@ -43,7 +44,7 @@ public class QuackTest extends QuackClient {
         createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
         getQuackDuck(runner, "${duckId}", "1", "1");
         runner.variable("sound", "moo");
-        validateResponseQuackjson(runner, "messageTest/MessageQuackDuckPropertiesResponse.json");
+        validateResponseJsonBodyFromFile(runner, HttpStatus.OK, "messageTest/MessageQuackDuckPropertiesResponse.json");
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 }
