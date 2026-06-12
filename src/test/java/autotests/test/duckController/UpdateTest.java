@@ -24,7 +24,7 @@ public class UpdateTest extends UpdateClient {
         createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
         updateDuck(runner, "red", 0.5, "${duckId}", "wood", "quack", "ACTIVE");
         runner.variable("message", "Duck with id = ${duckId} is updated");
-        validateResponseUpdateJson(runner, "messageTest/MessageDuckPropertiesResponse.json");
+        validateResponseJsonBodyFromFile(runner, "messageTest/MessageDuckPropertiesResponse.json");
         validateDuckInDatabase(runner, "${duckId}", "red", "0.5", "wood", "quack", "ACTIVE");
         deleteDuckFromDatabase(runner, "${duckId}");
     }
@@ -40,7 +40,7 @@ public class UpdateTest extends UpdateClient {
         createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
         updateDuck(runner, "red", 0.03, "${duckId}", "wood", "quack-quack", "ACTIVE");
         runner.variable("message", "Duck with id = ${duckId} is updated");
-        validateResponseUpdateJson(runner, "messageTest/MessageDuckPropertiesResponse.json");
+        validateResponseJsonBodyFromFile(runner, "messageTest/MessageDuckPropertiesResponse.json");
         validateDuckInDatabase(runner, "${duckId}", "red", "0.03", "wood", "quack-quack", "ACTIVE");
         deleteDuckFromDatabase(runner, "${duckId}");
     }

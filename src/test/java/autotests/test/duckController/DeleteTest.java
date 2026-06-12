@@ -22,7 +22,7 @@ public class DeleteTest extends DeleteClient {
         createDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
         runner.variable("message", "Duck is deleted");
         deleteDuck(runner, "${duckId}");
-        validateResponseDelete(runner, "messageTest/MessageDuckPropertiesResponse.json");
+        validateResponseJsonBodyFromFile(runner, "messageTest/MessageDuckPropertiesResponse.json");
         validateDeleteDuckInDatabase(runner, "${duckId}");
     }
 }

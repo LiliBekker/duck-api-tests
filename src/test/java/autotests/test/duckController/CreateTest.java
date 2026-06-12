@@ -33,7 +33,7 @@ public class CreateTest extends CreateClient {
                 .sound("quack")
                 .wingsState("ACTIVE");
         createDuck(runner, properties);
-        validateResponseCreate(runner, expectedResponse);
+        validateResponseWthiIdObject(runner, expectedResponse);
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
@@ -51,7 +51,7 @@ public class CreateTest extends CreateClient {
                 .wingsState("ACTIVE");
         createDuck(runner, properties);
         runner.variable("duckMaterial", "wood");
-        validateResponseCreate(runner, "createTest/CreateDuckPropertiesResponse.json");
+        validateResponseWthiIdJsonBodyFromFile(runner, "createTest/CreateDuckPropertiesResponse.json");
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 }
