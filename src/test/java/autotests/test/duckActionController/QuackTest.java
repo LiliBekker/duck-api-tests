@@ -11,16 +11,15 @@ import io.qameta.allure.Story;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+@Epic("Тесты на duck-action-controller")
+@Feature("Звук уточки")
+@Story("Эндпоинт /api/duck/action/quack")
 public class QuackTest extends QuackClient {
 
     private static final String ODD_ID = "3";
     private static final String EVEN_ID = "2";
 
-
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Проверка кряканья уточки с корректным нечётным id и корректным звуком")
-    @Story("Эндпоинт /api/duck/action/quack")
-    @Test()
+    @Test(description = "Проверка кряканья уточки с корректным нечётным id и корректным звуком")
     @CitrusTest
     public void quackDuckWithOddId(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", ODD_ID);
@@ -32,11 +31,7 @@ public class QuackTest extends QuackClient {
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
-
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Проверка кряканья уточки с корректный чётный id и корректным звуком")
-    @Story("Эндпоинт /api/duck/action/quack")
-    @Test()
+    @Test(description = "Проверка кряканья уточки с корректный чётный id и корректным звуком")
     @CitrusTest
     public void quackDuckWithEvenId(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", EVEN_ID);

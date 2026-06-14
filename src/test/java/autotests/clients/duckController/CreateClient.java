@@ -5,6 +5,7 @@ import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.message.builder.ObjectMappingPayloadBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.Step;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class CreateClient extends DuckClient {
     String duckCreateApiPath = "/api/duck/create";
 
+    @Step("Отправка запроса на создание уточки через метод /api/duck/create")
     public void createDuck(TestCaseRunner runner, Object duckData) {
         runner.$(http()
                 .client(duckService)
@@ -26,6 +28,7 @@ public class CreateClient extends DuckClient {
                 .body(new ObjectMappingPayloadBuilder(duckData, new ObjectMapper())));
     }
 
+    @Step("Проверка получения ответа от сервера по телу Json")
     public void validateResponseCreate(TestCaseRunner runner, String color, double height,
                                        String material, String sound, String wingsState) {
         runner.$(http()
@@ -43,6 +46,7 @@ public class CreateClient extends DuckClient {
                         "\"wingsState\": \"" + wingsState + "\"\n" + "}"));
     }
 
+    @Step("Проверка получения ответа от сервера по ожидаемому объекту")
     public void validateResponseCreate(TestCaseRunner runner, Object expectedPayload) {
         runner.$(http()
                 .client(duckService)
@@ -54,6 +58,7 @@ public class CreateClient extends DuckClient {
                 .body(new ObjectMappingPayloadBuilder(expectedPayload, new ObjectMapper())));
     }
 
+    @Step("Проверка получения ответа от сервера по json-файлу")
     public void validateResponseCreate(TestCaseRunner runner, String expectedPayloadPath) {
         runner.$(http()
                 .client(duckService)

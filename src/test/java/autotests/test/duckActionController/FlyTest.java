@@ -11,13 +11,11 @@ import io.qameta.allure.Story;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+@Epic("Тесты на duck-action-controller")
+@Feature("Полет уточки")
+@Story("Эндпоинт /api/duck/action/fly")
 public class FlyTest extends FlyClient {
-
-
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Проверка умения летать уточки с существующим id и с активными крыльями")
-    @Story("Эндпоинт /api/duck/action/fly")
-    @Test()
+    @Test(description = "Проверка умения летать уточки с существующим id и с активными крыльями")
     @CitrusTest
     public void flyDuckWithActiveWings(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", "1");
@@ -29,11 +27,7 @@ public class FlyTest extends FlyClient {
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
-
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Проверка умения летать уточки с существующим id и со связанными крыльями")
-    @Story("Эндпоинт /api/duck/action/fly")
-    @Test()
+    @Test(description = "Проверка умения летать уточки с существующим id и со связанными крыльями")
     @CitrusTest
     public void flyDuckWithFixedWings(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", "2");
@@ -44,12 +38,7 @@ public class FlyTest extends FlyClient {
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
-
-
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Проверка умения летать уточки с существующим id и с крыльями в неопределенном состоянии")
-    @Story("Эндпоинт /api/duck/action/fly")
-    @Test()
+    @Test(description = "Проверка умения летать уточки с существующим id и с крыльями в неопределенном состоянии")
     @CitrusTest
     public void flyDuckWithUndefinedWings(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("duckId", "3");

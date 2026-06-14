@@ -10,12 +10,12 @@ import io.qameta.allure.Story;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+@Epic("Тесты на duck-controller")
+@Feature("Удаление уточки")
+@Story("Эндпоинт /api/duck/delete")
 public class DeleteTest extends DeleteClient {
 
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Удаление уточки")
-    @Story("Эндпоинт /api/duck/delete")
-    @Test()
+    @Test(description = "Удаление уточки")
     @CitrusTest
     public void deleteDuckInDatabase(@Optional @CitrusResource TestCaseRunner runner) {
         generateDuckId(runner);

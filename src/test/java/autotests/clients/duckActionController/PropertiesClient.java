@@ -5,6 +5,7 @@ import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.message.builder.ObjectMappingPayloadBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.Step;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class PropertiesClient extends DuckClient {
     String duckPropertiesApiPath = "/api/duck/action/properties";
 
+    @Step("Отправка запроса на получение свойств уточки через метод /api/duck/action/properties")
     public void getPropertiesDuck(TestCaseRunner runner, String id) {
 
         runner.$(http()
@@ -25,6 +27,7 @@ public class PropertiesClient extends DuckClient {
                 .queryParam("id", id));
     }
 
+    @Step("Проверка получения ответа от сервера по телу Json")
     public void validateResponseProperties(TestCaseRunner runner, String color, double height,
                                            String material, String sound, String wingsState) {
         runner.$(http()
@@ -42,6 +45,7 @@ public class PropertiesClient extends DuckClient {
                         "}"));
     }
 
+    @Step("Проверка получения ответа от сервера по ожидаемому объекту")
     public void validateResponseProperties(TestCaseRunner runner, Object expectedPayload) {
         runner.$(http()
                 .client(duckService)
@@ -52,6 +56,7 @@ public class PropertiesClient extends DuckClient {
                 .body(new ObjectMappingPayloadBuilder(expectedPayload, new ObjectMapper())));
     }
 
+    @Step("Проверка получения ответа от сервера по json-файлу")
     public void validateResponseProperties(TestCaseRunner runner, String expectedPayloadPath) {
         runner.$(http()
                 .client(duckService)

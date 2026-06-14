@@ -5,6 +5,7 @@ import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.message.builder.ObjectMappingPayloadBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.Step;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class SwimClient extends DuckClient {
     String duckSwimApiPath = "/api/duck/swim";
 
+    @Step("Отправка запроса на умение плавать уточки через метод /api/duck/swim")
     public void getSwimDuck(TestCaseRunner runner, String id) {
         runner.$(http()
                 .client(duckService)
@@ -24,6 +26,7 @@ public class SwimClient extends DuckClient {
                 .queryParam("id", id));
     }
 
+    @Step("Проверка получения ответа от сервера по телу Json")
     public void validateResponseSwim(TestCaseRunner runner, HttpStatus status, String mas) {
         runner.$(http()
                 .client(duckService)
@@ -41,6 +44,7 @@ public class SwimClient extends DuckClient {
                         "}"));
     }
 
+    @Step("Проверка получения ответа от сервера по ожидаемому объекту")
     public void validateResponseSwim(TestCaseRunner runner, HttpStatus status, Object expectedPayload) {
         runner.$(http()
                 .client(duckService)
@@ -51,6 +55,7 @@ public class SwimClient extends DuckClient {
                 .body(new ObjectMappingPayloadBuilder(expectedPayload, new ObjectMapper())));
     }
 
+    @Step("Проверка получения ответа от сервера по json-файлу")
     public void validateResponseSwimJson(TestCaseRunner runner, HttpStatus status, String expectedPayloadPath) {
         runner.$(http()
                 .client(duckService)

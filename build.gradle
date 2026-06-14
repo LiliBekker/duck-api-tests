@@ -22,6 +22,7 @@ dependencies {
 
     // Allure
     testImplementation 'io.qameta.allure:allure-testng:2.9.6'
+    testImplementation 'org.aspectj:aspectjweaver:1.9.22.1'
 
     testImplementation group: 'org.slf4j', name: 'slf4j-reload4j', version: '2.0.7'
 

@@ -1,7 +1,6 @@
 package autotests.test.duckController;
 
 import autotests.clients.duckController.UpdateClient;
-import autotests.payloads.request.DuckPropertiesRequestCreate;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
@@ -11,13 +10,11 @@ import io.qameta.allure.Story;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+@Epic("Тесты на duck-controller")
+@Feature("Изменения уточки")
+@Story("Эндпоинт /api/duck/update")
 public class UpdateTest extends UpdateClient {
-
-
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Изменение цвета и высоты уточки")
-    @Story("Эндпоинт /api/duck/update")
-    @Test()
+    @Test(description = "Изменение цвета и высоты уточки")
     @CitrusTest
     public void updateColorAndHeightDuck(@Optional @CitrusResource TestCaseRunner runner) {
         generateDuckId(runner);
@@ -29,11 +26,7 @@ public class UpdateTest extends UpdateClient {
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
-
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Изменение цвета и звука уточки")
-    @Story("Эндпоинт /api/duck/update")
-    @Test()
+    @Test(description = "Изменение цвета и звука уточки")
     @CitrusTest
     public void updateColorAndSoundDuck(@Optional @CitrusResource TestCaseRunner runner) {
         generateDuckId(runner);

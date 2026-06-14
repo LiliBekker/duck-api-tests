@@ -12,11 +12,12 @@ import io.qameta.allure.Story;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+@Epic("Тесты на duck-controller")
+@Feature("Создание уточки")
+@Story("Эндпоинт /api/duck/create")
 public class CreateTest extends CreateClient {
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Проверка создания уточки с material = rubber")
-    @Story("Эндпоинт /api/duck/create")
-    @Test()
+
+    @Test(description = "Проверка создания уточки с material = rubber")
     @CitrusTest
     public void createDuckWithMaterialRubber(@Optional @CitrusResource TestCaseRunner runner) {
         DuckPropertiesRequestCreate properties = new DuckPropertiesRequestCreate()
@@ -34,13 +35,11 @@ public class CreateTest extends CreateClient {
                 .wingsState("ACTIVE");
         createDuck(runner, properties);
         validateResponseCreate(runner, expectedResponse);
+        validateDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "rubber", "quack", "ACTIVE");
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 
-    @Epic("Тесты на duck-action-controller")
-    @Feature("Проверка создания уточки с material = wood")
-    @Story("Эндпоинт /api/duck/create")
-    @Test()
+    @Test(description = "Проверка создания уточки с material = wood")
     @CitrusTest
     public void createDuckWithMaterialWood(@Optional @CitrusResource TestCaseRunner runner) {
         DuckPropertiesRequestCreate properties = new DuckPropertiesRequestCreate()
@@ -52,6 +51,7 @@ public class CreateTest extends CreateClient {
         createDuck(runner, properties);
         runner.variable("duckMaterial", "wood");
         validateResponseCreate(runner, "createTest/CreateDuckPropertiesResponse.json");
+        validateDuckInDatabase(runner, "${duckId}", "yellow", "0.03", "wood", "quack", "ACTIVE");
         deleteDuckFromDatabase(runner, "${duckId}");
     }
 }
