@@ -2,7 +2,6 @@ package autotests;
 
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.http.client.HttpClientBuilder;
 import com.consol.citrus.message.MessageType;
 import com.consol.citrus.message.builder.ObjectMappingPayloadBuilder;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
@@ -17,7 +16,6 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.Random;
 
 import static com.consol.citrus.actions.ExecuteSQLAction.Builder.sql;
-import static com.consol.citrus.actions.ExecuteSQLQueryAction.Builder.query;
 import static com.consol.citrus.dsl.MessageSupport.MessageBodySupport.fromBody;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 

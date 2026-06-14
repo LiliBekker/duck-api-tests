@@ -3,9 +3,6 @@ package autotests.clients.duckController;
 import autotests.clients.DuckClient;
 import com.consol.citrus.TestCaseRunner;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class UpdateClient extends DuckClient {
     String duckUpdateApiPath = "/api/duck/update";
