@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '2.9.6'
 }
 
 group = 'org.example'
@@ -15,12 +16,25 @@ dependencies {
     testImplementation group: 'com.consol.citrus', name: 'citrus-spring', version: '3.4.0'
     testImplementation group: 'com.consol.citrus', name: 'citrus-http', version: '3.4.0'
     testImplementation group: 'com.consol.citrus', name: 'citrus-validation-json', version: '3.4.0'
+    //Подключение БД
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.196'
+    testImplementation group: 'com.consol.citrus', name: 'citrus-sql', version: '3.4.0'
+
+    // Allure
+    testImplementation 'io.qameta.allure:allure-testng:2.9.6'
+    testImplementation 'org.aspectj:aspectjweaver:1.9.22.1'
 
     testImplementation group: 'org.slf4j', name: 'slf4j-reload4j', version: '2.0.7'
 
     testImplementation group: 'org.projectlombok', name: 'lombok', version: '1.18.28'
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.28'
 }
 
 test {
     useTestNG()
+    systemProperty "allure.results.directory", "$buildDir/allure-results"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }

@@ -1,0 +1,7 @@
+{
+  "timestamp": "@ignore@",
+  "status": "@variable('Status')@",
+  "error": "@variable('Error')@",
+  "message": "@variable('Message')@",
+  "path": "@variable('Path')@"
+}
